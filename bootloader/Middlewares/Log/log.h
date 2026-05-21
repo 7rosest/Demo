@@ -16,7 +16,8 @@ typedef enum {
 } log_level_t;
 
 typedef enum {
-    MODULE_SHELL = 0,      
+    MODULE_SYS = 0,
+    MODULE_SHELL,      
     MODULE_ECALL,            
     MODULE_GPS,           
     MODULE_COMM,           
@@ -30,10 +31,10 @@ typedef struct {
 
 extern debug_config_t debug_config[MODULE_MAX];
 
-#define LOG_E(module, fmt, ...) do { if(debug_config[module].level >= LOG_LEVEL_INFO) shellPrintf("I/%s: " fmt, debug_config[module].name, ##__VA_ARGS__); } while(0)
-#define LOG_W(module, fmt, ...) do { if(debug_config[module].level >= LOG_LEVEL_INFO) shellPrintf("I/%s: " fmt, debug_config[module].name, ##__VA_ARGS__); } while(0)
-#define LOG_I(module, fmt, ...) do { if(debug_config[module].level >= LOG_LEVEL_INFO) shellPrintf("I/%s: " fmt, debug_config[module].name, ##__VA_ARGS__); } while(0)
-#define LOG_D(module, fmt, ...) do { if(debug_config[module].level >= LOG_LEVEL_INFO) shellPrintf("I/%s: " fmt, debug_config[module].name, ##__VA_ARGS__); } while(0)
+#define LOG_E(module, fmt, ...) do { if(debug_config[module].level >= LOG_LEVEL_ERROR) shellPrintf("E/%s: " fmt, debug_config[module].name, ##__VA_ARGS__); } while(0)
+#define LOG_W(module, fmt, ...) do { if(debug_config[module].level >= LOG_LEVEL_WARN)  shellPrintf("W/%s: " fmt, debug_config[module].name, ##__VA_ARGS__); } while(0)
+#define LOG_I(module, fmt, ...) do { if(debug_config[module].level >= LOG_LEVEL_INFO)  shellPrintf("I/%s: " fmt, debug_config[module].name, ##__VA_ARGS__); } while(0)
+#define LOG_D(module, fmt, ...) do { if(debug_config[module].level >= LOG_LEVEL_DEBUG) shellPrintf("D/%s: " fmt, debug_config[module].name, ##__VA_ARGS__); } while(0)
 
 #define LOG_HEX(module, data, len) \
     if(debug_config[module].level >= LOG_LEVEL_HEX) { \

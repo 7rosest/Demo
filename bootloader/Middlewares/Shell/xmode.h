@@ -8,7 +8,7 @@
  * @brief XMODEM 协议控制字符定义
  */
 #define XMODEM_SOH         0x01    /* 开始头（128字节数据包）*/
-#define XMODEM_STX         0x02    /* 开始头（1024字节数据包）*/
+// #define XMODEM_STX         0x02    /* 开始头（1024字节数据包）*/
 #define XMODEM_EOT         0x04    /* 传输结束 */
 #define XMODEM_ACK         0x06    /* 确认 */
 #define XMODEM_NAK         0x15    /* 否定确认 */
@@ -52,9 +52,13 @@ typedef enum {
 
 /**
  * @brief XMODEM 传输上下文结构体
- */
+ */ 
 typedef struct {
-    uint8_t         buffer[1029];     /* 数据包缓冲区 */   //133
+#ifdef XMODEM_STX
+    uint8_t         buffer[1029];     /* 数据包缓冲区 */   //1029
+#else
+    uint8_t         buffer[133];     /* 数据包缓冲区 */   //133  
+#endif
     uint8_t         expected_seq;    /* 期望的数据包序列号 */
     uint32_t        timeout_start;   /* 超时计时起始时间 */
     xmodem_state_t  state;           /* 当前传输状态 */

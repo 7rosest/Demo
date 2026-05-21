@@ -51,8 +51,7 @@ extern event_manager_t g_event_mgr;
  * 
  * @return void
  */
-static void led_on(void)
-{
+static void led_on(void) {
     HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_RESET);
 }
 
@@ -61,8 +60,7 @@ static void led_on(void)
  * 
  * @return void
  */
-static void led_off(void)
-{
+static void led_off(void) {
     HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_SET);
 }
 
@@ -71,8 +69,7 @@ static void led_off(void)
  * 
  * @return void
  */
-static void led_toggle(void)
-{
+static void led_toggle(void) {
     HAL_GPIO_TogglePin(LED_PORT, LED_PIN);
 }
 
@@ -83,8 +80,7 @@ static void led_toggle(void)
  * @param data 事件数据
  * @return int 返回值
  */
-static int led_blink_handler(int event, void *data)
-{
+static int led_blink_handler(int event, void *data) {
     switch (event)
     {
     case EVENT_SYS_STARTUP:
@@ -118,8 +114,7 @@ static notifier_node_t led_node = {
  * 
  * @return int 返回值
  */
-static int led_init(void)
-{
+static int led_init(void) {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     HAL_GPIO_WritePin(LED_PORT, LED_PIN, GPIO_PIN_RESET);
 
@@ -139,16 +134,14 @@ MODULE_INIT(led_init, "LED");
  * 
  * @param pvParameters 参数
  */
-static void led_task(void *pvParameters)
-{
+static void led_task(void *pvParameters) {
     // 注册到事件管理器，监听 LED相关事件
     notifier_register_event(&g_event_mgr, &led_node);
     // char temp3[256] = {0};
     // 这里可以添加LED的定时任务逻辑，例如呼吸灯效果
     // 可以使用pwm_breath数组来设置PWM占空比，实现平滑的呼吸灯效果
-    while(1)
-    {
-        // HAL_GPIO_TogglePin(LED_PORT, LED_PIN);
+    while(1) {
+        //HAL_GPIO_TogglePin(LED_PORT, LED_PIN);
         // LOG_I(MODULE_SHELL, "LED Toggle\r\n");
         vTaskDelay(500);
     }

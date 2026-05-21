@@ -4,16 +4,14 @@
 #include <stdint.h>
 
 /* command list */
-typedef struct
-{
+typedef struct {
     const char cmdName[100];
     const void * cmdHandler;
     char cmdHelp[20];
 } commandStruct;
 
 /* shell cmd */
-typedef struct
-{
+typedef struct{
     unsigned char used;
     unsigned char name[16];
     unsigned int  cmdNum;

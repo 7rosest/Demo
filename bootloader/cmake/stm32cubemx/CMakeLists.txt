@@ -25,6 +25,7 @@ set(MX_Include_Dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Shell
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Task
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Flash
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../App
 )
 
 # STM32CubeMX generated application sources
@@ -49,6 +50,7 @@ set(MX_Application_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Task/k_task.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Flash/flash.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Flash/eeprom_sim.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../App/sys_manage.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../startup_stm32f407xx.s
 )
 

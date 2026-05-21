@@ -134,7 +134,11 @@ xmodem_error_t xmodem_run(xmodem_context_t *ctx)
                 
                 while (ctx->state == XMODEM_STATE_HANDSHAKE) {
                     if (xmodem_recv_byte(&byte, XMODEM_BYTE_TIMEOUT)) {
+#if defined(XMODEM_STX)
                         if ((byte == XMODEM_SOH) || (byte == XMODEM_STX)) {
+#else
+                        if (byte == XMODEM_SOH) {
+#endif
                             ctx->buffer[0] = byte;
                             packet_size = (byte == XMODEM_SOH) ? XMODEM_PACKET_SIZE : XMODEM_PACKET_SIZE_1K;
                             ctx->state = XMODEM_STATE_RECEIVING;
@@ -158,7 +162,11 @@ xmodem_error_t xmodem_run(xmodem_context_t *ctx)
 
             case XMODEM_STATE_RECEIVING: {
                 uint16_t offset = 1;
+#if defined(XMODEM_STX)
                 packet_size = (ctx->buffer[0] == XMODEM_SOH) ? XMODEM_PACKET_SIZE : XMODEM_PACKET_SIZE_1K;
+#else
+                packet_size = XMODEM_PACKET_SIZE;
+#endif
                 uint16_t total_len = 5 + packet_size; 
 
                 while (offset < total_len) { // 133 = 1(SOH) + 1(SEQ) + 1(SEQ_CMP) + 128(DATA) + 2(CRC)
@@ -233,7 +241,11 @@ xmodem_error_t xmodem_run(xmodem_context_t *ctx)
                     if (byte == XMODEM_EOT) {
                         xmodem_send_ack();
                         ctx->state = XMODEM_STATE_COMPLETE;
+#if defined(XMODEM_STX)
                     } else if (byte == XMODEM_SOH || byte == XMODEM_STX) {
+#else
+                    } else if (byte == XMODEM_SOH) {
+#endif
                         ctx->buffer[0] = byte;
                     } else {
                         ctx->error = XMODEM_ERR_SEQ;

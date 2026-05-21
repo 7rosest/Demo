@@ -7,6 +7,22 @@
 #define ECU_SW_VERSION "00.00.02"
 #define ECU_HW_VERSION "0.0.1"
 
+typedef struct {
+    uint32_t ota_boot_crc;        // OTA引导CRC32校验值
+    uint32_t ota_app_crc;         // OTA应用CRC32校验值
+    uint16_t ota_boot_size;       // OTA引导大小
+    uint16_t ota_app_size;        // OTA应用大小
+    uint8_t  app_valid;           // 应用是否有效
+    uint8_t  boot_valid;          // 引导是否有效
+    uint8_t  dog_reset_cnt;       // 狋门狗重置次数
+    uint8_t  keep_boot;           // 保持在boot模式
+} ota_status_t;
+
+typedef struct {
+    uint32_t reboot_count;        // 重启次数
+    ota_status_t ota_status;
+} param_config_t;
+
 /* 定义一个初始化描述结构体 */
 typedef struct {
     const char *name;
@@ -38,5 +54,7 @@ typedef struct {
         .stack_size = task_stack_size,                         \
         .priority = task_priority,                             \
     }
+
+extern param_config_t config;
 
 #endif // GLOBAL_H

@@ -2,8 +2,11 @@
 #include "flash.h"
 #include "../Log/log.h"
 #include <stdint.h>
+#include "global.h"
 
-/* 私有函数声明 */
+eeprom_dev_t eeprom = {0};
+param_config_t config = {0};
+
 static eeprom_status_t find_valid_block(eeprom_dev_t *dev);
 static eeprom_status_t mark_block_invalid(eeprom_dev_t *dev, uint32_t block_idx);
 static eeprom_status_t write_block(eeprom_dev_t *dev, uint32_t block_idx, const uint8_t *data, uint32_t data_len);
@@ -181,7 +184,6 @@ eeprom_status_t eeprom_write_data(eeprom_dev_t *dev, const void *data, uint32_t 
     eeprom_status_t status;
     
     /* 检查是否块已满（当前块索引等于有效块索引，表示所有块都已写过） */
-    LOG_I(MODULE_SHELL, "current_block: %u, valid_block: %u", dev->current_block, dev->valid_block);
     if (dev->current_block == 0 && dev->valid_block != 0xFFFFFFFF) {
         LOG_I(MODULE_SHELL, "block full!!!\r\n");
         /* 块已满，直接擦除整个扇区 */
@@ -315,21 +317,9 @@ static uint32_t crc32(const uint8_t *data, uint32_t len) {
     return crc ^ 0xFFFFFFFF;
 }
 
-#define EEPROM_SECTOR_ADDR  0x08010000
-
-typedef struct {
-    uint32_t reboot_count;        // 重启次数
-    uint8_t  app_valid;           // 应用是否有效
-    uint8_t  boot_valid;          // 引导是否有效
-    uint8_t  dog_reset_cnt;       // 狋门狗重置次数
-    uint8_t  keep_boot;           // 保持在boot模式
-} param_config_t;
-
-eeprom_dev_t eeprom = {0};
-param_config_t config = {0};
-param_config_t read_config = {0};
-
 int eeprom_test(void) {
+    param_config_t read_config = {0};
+
     eeprom_init(&eeprom, EEPROM_SECTOR_ADDR);
 
     eeprom_read_data(&eeprom, &read_config, sizeof(read_config));
@@ -342,9 +332,6 @@ int eeprom_test(void) {
     }
 
     LOG_I(MODULE_SHELL, "EEPROM Write Success: reboot_count=%u\r\n", config.reboot_count);
-    
-    LOG_D(MODULE_SHELL, "valid_block=%u, current_block=%u, app_valid=%u, boot_valid=%u, dog_reset_cnt=%u, keep_boot=%u\r\n", \
-        eeprom.valid_block, eeprom.current_block, config.app_valid, config.boot_valid, config.dog_reset_cnt, config.keep_boot);
-    
+
     return 0;
 }

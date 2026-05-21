@@ -19,7 +19,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
-#include <stdint.h>
 
 /* USER CODE BEGIN 0 */
 #include "../../Middlewares/Shell/shell.h"

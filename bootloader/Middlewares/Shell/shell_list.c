@@ -69,40 +69,44 @@ int xbin_app(uint8_t cmdSource, uint32_t instance, unsigned int  argc, unsigned 
         case XMODEM_OK:
             shellPrintf("Download Complete!\r\n");
             shellPrintf("Received: %lu bytes\r\n", xmodem_get_bytes_received(&xmodem));
+
+            jump_to_app();
             return 0;
         
         case XMODEM_ERR_TIMEOUT:
             shellPrintf("Error: Timeout\r\n");
-            return -1;
+            break;
         
         case XMODEM_ERR_CRC:
             shellPrintf("Error: CRC Check Failed\r\n");
-            return -1;
+            break;
         
         case XMODEM_ERR_SEQ:
             shellPrintf("Error: Sequence Number Mismatch\r\n");
-            return -1;
+            break;
         
         case XMODEM_ERR_FLASH_ERASE:
             shellPrintf("Error: Flash Erase Failed\r\n");
-            return -1;
+            break;
         
         case XMODEM_ERR_FLASH_WRITE:
             shellPrintf("Error: Flash Write Failed\r\n");
-            return -1;
+            break;
         
         case XMODEM_ERR_HANDSHAKE:
             shellPrintf("Error: Handshake Failed\r\n");
-            return -1;
+            break;
         
         case XMODEM_ERR_RETRY_EXCEED:
             shellPrintf("Error: Maximum Retries Exceeded\r\n");
-            return -1;
+            break;
         
         default:
             shellPrintf("Error: Unknown Error\r\n");
-            return -1;
+            break;
     }
+
+    return -1;
 }
 
 /* 定义类型 */
@@ -117,11 +121,6 @@ void jump_to_app(void) {
 
     /* 检查栈顶地址是否合法 */
     if(((*(__IO uint32_t *)APP_FLASH_ADDR) & 0x2FFE0000) == 0x20020000) {
-
-  LOG_I(MODULE_SHELL,"APP_FLASH_ADDR: 0x%08X\n", APP_FLASH_ADDR);
-  LOG_I(MODULE_SHELL,"Stack Top: 0x%08X\n", *(__IO uint32_t *)APP_FLASH_ADDR);
-  LOG_I(MODULE_SHELL,"Reset Vector: 0x%08X\n", *(__IO uint32_t *)(APP_FLASH_ADDR + 4));
-        
         /* 屏蔽所有中断，防止在跳转过程中，中断干扰出现异常 */
         __disable_irq();
 
@@ -155,17 +154,17 @@ void system_info() {
     const char *compile_date = __DATE__;   // 格式: "May 18 2026"
     const char *compile_time = __TIME__;   // 格式: "10:30:45"
     
-    LOG_I(MODULE_SHELL, "\r\n");
-    LOG_I(MODULE_SHELL, "╔════════════════════════════════════════════════════════════╗\r\n");
-    LOG_I(MODULE_SHELL, "║                      Bootloader v%s                     ║\r\n", BOOT_VERSION);
-    LOG_I(MODULE_SHELL, "║                STM32F407VE Development Board               ║\r\n");
-    LOG_I(MODULE_SHELL, "╠════════════════════════════════════════════════════════════╣\r\n");
-    LOG_I(MODULE_SHELL, "║  Compile Date: %-44s║\r\n", compile_date);
-    LOG_I(MODULE_SHELL, "║  Compile Time: %-44s║\r\n", compile_time);
-    LOG_I(MODULE_SHELL, "╚════════════════════════════════════════════════════════════╝\r\n");
-    LOG_I(MODULE_SHELL, "  [INFO] Flash Base: 0x%08X, App Start: 0x%08X\r\n", FLASH_BASE, APP_FLASH_ADDR);
-    LOG_I(MODULE_SHELL, "  [INFO] RAM Base:   0x%08X, Size: 192 KB\r\n", SRAM_BASE);
-    LOG_I(MODULE_SHELL, "  [INFO] System Clock: 168 MHz\r\n");
-    LOG_I(MODULE_SHELL, "  [READY] Waiting for commands...\r\n");
-    LOG_I(MODULE_SHELL, "\r\n");
+    LOG_I(MODULE_SYS, "\r\n");
+    LOG_I(MODULE_SYS, "╔════════════════════════════════════════════════════════════╗\r\n");
+    LOG_I(MODULE_SYS, "║                      Bootloader v%s                     ║\r\n", BOOT_VERSION);
+    LOG_I(MODULE_SYS, "║                STM32F407VE Development Board               ║\r\n");
+    LOG_I(MODULE_SYS, "╠════════════════════════════════════════════════════════════╣\r\n");
+    LOG_I(MODULE_SYS, "║  Compile Date: %-44s║\r\n", compile_date);
+    LOG_I(MODULE_SYS, "║  Compile Time: %-44s║\r\n", compile_time);
+    LOG_I(MODULE_SYS, "╚════════════════════════════════════════════════════════════╝\r\n");
+    LOG_I(MODULE_SYS, "  [INFO] Flash Base: 0x%08X, App Start: 0x%08X\r\n", FLASH_BASE, APP_FLASH_ADDR);
+    LOG_I(MODULE_SYS, "  [INFO] RAM Base:   0x%08X, Size: 192 KB\r\n", SRAM_BASE);
+    LOG_I(MODULE_SYS, "  [INFO] System Clock: 168 MHz\r\n");
+    LOG_I(MODULE_SYS, "  [READY] Waiting for commands...\r\n");
+    LOG_I(MODULE_SYS, "\r\n");
 }

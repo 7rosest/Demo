@@ -23,7 +23,9 @@
 /* USER CODE BEGIN 0 */
 #include "../../Middlewares/Shell/shell.h"
 #include "../../Middlewares/Shell/ring_buffer.h"
+#include "global.h"
 uint8_t debug_rx_data = 0;
+uint32_t uart_activity_time = 0;
 extern uint8_t g_xModemCommEnable;
 extern ringbuffer_t dbg_rx_ring;
 /* USER CODE END 0 */
@@ -124,6 +126,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
         if (g_xModemCommEnable) {
             write_ringBuffer(&debug_rx_data, 1, &dbg_rx_ring);
         } else {
+            uart_activity_time = xTaskGetTickCount();
             shell_uart_rx_callback(debug_rx_data);
         }
 

@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include <string.h>
 
+#define EEPROM_SECTOR_ADDR  0x08010000
+
 /* 配置参数 */
 #define EEPROM_SECTOR_SIZE      65536UL    /* 扇区大小 64KB */
 #define EEPROM_BLOCK_SIZE       64UL      /* 块大小 64字节 */
