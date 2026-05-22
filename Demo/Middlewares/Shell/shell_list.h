@@ -9,5 +9,6 @@ void dbg(uint8_t cmdSource, uint32_t instance, unsigned int  argc, unsigned char
 int xbin_boot(uint8_t cmdSource, uint32_t instance, unsigned int  argc, unsigned char **argv);
 void software_reset(uint8_t cmdSource, uint32_t instance, unsigned int  argc, unsigned char **argv);
 void cpu_info(uint8_t cmdSource, uint32_t instance, unsigned int  argc, unsigned char **argv);
+void flash_show(uint8_t cmdSource, uint32_t instance, unsigned int argc, unsigned char **argv);
 
 #endif 

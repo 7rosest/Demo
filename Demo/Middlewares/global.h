@@ -4,7 +4,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#define ECU_SW_VERSION "00.00.02"
+#define ECU_SW_VERSION "00.00.03"
 #define ECU_HW_VERSION "0.0.1"
 
 typedef struct {

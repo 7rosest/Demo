@@ -24,6 +24,8 @@ static const commandStruct commandList[] = {
     {"xbin_boot",   (void *)xbin_boot,          "xbin boot."},
     {"reset",   (void *)software_reset,          "software reset."},
     {"cpu_info",   (void *)cpu_info,          "cpu info."},
+    {"flash_show",   (void *)flash_show,          "flash show."},   
+    
 };
 
 extern int isr_cnt;
