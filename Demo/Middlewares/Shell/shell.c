@@ -59,8 +59,8 @@ void shellPrintf(const char *fmt, ...) {
     }
 
     va_list args;
-    uint8_t *uart_out_data = NULL;
-    uart_out_data = pvPortMalloc(sizeof(uint8_t) * 256);
+    char *uart_out_data = NULL;
+    uart_out_data = pvPortMalloc(sizeof(char) * 256);
     if(uart_out_data == NULL) {
         shellPrintf("malloc faild\r\n");
         return;
@@ -228,20 +228,20 @@ static void checkcmd(void) {
  * @return void
  */
 void shell_uart_rx_callback(uint8_t rx_data) {
-    uint8_t tempchar = rx_data;
-    static uint8_t lastchar;
+    uint8_t temp_char = rx_data;
+    static uint8_t last_char;
 
     if (shellBuff.recvPtr>=256) {
         shellBuff.recvPtr = 0;
     }
-    shellBuff.recvPipe[shellBuff.recvPtr++] = tempchar;
+    shellBuff.recvPipe[shellBuff.recvPtr++] = temp_char;
 
-    if (lastchar == '\r' && tempchar == '\n') {
+    if (last_char == '\r' && temp_char == '\n') {
         shellBuff.recvPipe[shellBuff.recvPtr++] = '\0';
         shellBuff.recvPtr = 0;
         kernelSetTaskEvent(TASK_SYS_EVENT_READ);
     }
-    lastchar = tempchar;
+    last_char = temp_char;
 }
 
 void RingbufferInit(void) {

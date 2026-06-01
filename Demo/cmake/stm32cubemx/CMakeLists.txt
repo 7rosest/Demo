@@ -26,6 +26,7 @@ set(MX_Include_Dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Task
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Flash
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Scom
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Wifi
     ${CMAKE_CURRENT_SOURCE_DIR}/../../App
 )
 
@@ -54,6 +55,7 @@ set(MX_Application_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Flash/flash.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Flash/eeprom_sim.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Scom/scom.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Wifi/wifi.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../startup_stm32f407xx.s
 )
 

@@ -99,8 +99,11 @@ int main(void)
   MX_IWDG_Init();
   MX_USART1_UART_Init();
   MX_SPI1_Init();
+  MX_USART2_UART_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_UART_Receive_IT(&huart1, &debug_rx_data, 1);
+  HAL_UART_Receive_IT(&huart2, &wifi_rx_data, 1);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */

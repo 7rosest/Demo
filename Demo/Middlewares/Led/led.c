@@ -55,6 +55,7 @@ static int led_blink_handler(int event, void *data) {
             /* code */
             break;
         case EVENT_SLEEP_MODE:
+            led_off();
             /* code */
             break;
         default:

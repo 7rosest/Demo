@@ -35,10 +35,7 @@ extern "C" {
 extern SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN Private defines */
-#define DMA_BUFFER_SIZE    4096    // DMA缓冲区大小
-#define BYTE_QUEUE_DEPTH   8192    // 字节队列深度
-#define MAX_FRAME_SIZE     4096    // 单帧最大数据
-extern uint8_t dma_buffer[DMA_BUFFER_SIZE];
+
 /* USER CODE END Private defines */
 
 void MX_SPI1_Init(void);

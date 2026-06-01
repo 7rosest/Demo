@@ -34,16 +34,24 @@ extern "C" {
 
 extern UART_HandleTypeDef huart1;
 
+extern UART_HandleTypeDef huart2;
+
+extern UART_HandleTypeDef huart3;
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
 void MX_USART1_UART_Init(void);
+void MX_USART2_UART_Init(void);
+void MX_USART3_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void dbg_uart_send(uint8_t *data, uint32_t len);
+void wifi_uart_send(uint8_t *data, uint32_t len);
 
 extern uint8_t debug_rx_data;
+extern uint8_t wifi_rx_data;
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
