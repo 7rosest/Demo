@@ -12,16 +12,12 @@ extern uint32_t uart_activity_time;
  * 
  * @param pvParameters 参数
  */
-static void sys_task(void *pvParameters)
-{
-    uint32_t last_activity_time = xTaskGetTickCount();
-    uint16_t last_recv_ptr = 0;
+static void sys_task(void *pvParameters) {
     uint32_t timeout_ticks = UART_TIMEOUT_MS;
     
     LOG_I(MODULE_SYS, "Sys Task Started\r\n");
 
-    while(1)
-    {
+    while(1) {
         if (g_xModemCommEnable) {
             uart_activity_time = xTaskGetTickCount();
         } else {

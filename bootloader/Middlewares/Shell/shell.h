@@ -15,7 +15,7 @@ typedef struct{
     unsigned char used;
     unsigned char name[16];
     unsigned int  cmdNum;
-    commandStruct *cmdList;
+    const commandStruct *cmdList;
 } ShellStruct;
 
 typedef struct {

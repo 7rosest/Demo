@@ -4,7 +4,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#define BOOT_VERSION "0.0.2"
+#define BOOT_VERSION "0.0.3"
 
 typedef struct {
     uint32_t ota_boot_crc;        // OTA引导CRC32校验值

@@ -86,10 +86,10 @@ static void xmodem_send_ack(void)
 /**
  * @brief 发送否定确认（NAK）
  */
-static void xmodem_send_nak(void)
-{
-    xmodem_send_byte(XMODEM_NAK);
-}
+// static void xmodem_send_nak(void)
+// {
+//     xmodem_send_byte(XMODEM_NAK);
+// }
 
 /**
  * @brief 发送取消确认（CAN）

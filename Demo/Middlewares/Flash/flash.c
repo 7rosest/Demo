@@ -101,7 +101,6 @@ flash_status_t flash_erase(uint32_t addr) {
  * @return uint8_t 是否成功 
  */
 flash_status_t flash_write(uint32_t writeAddress, uint8_t *data, uint32_t length) {
-    FLASH_EraseInitTypeDef flashEraseInit;
     HAL_StatusTypeDef flashStatus = HAL_OK;
 
     uint32_t endAddr = 0;

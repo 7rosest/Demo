@@ -18,8 +18,7 @@ shell_buff_t shellBuff;
 
 void show_help(uint8_t cmdSource, uint32_t instance);
 
-static const commandStruct commandList[] =
-{
+static const commandStruct commandList[] = {
     {"help",       (void *)show_help,         "help."},
     {"dbg",        (void *)dbg,               "dbg set."},
     {"xbin_app",   (void *)xbin_app,          "xbin app."},
@@ -57,8 +56,8 @@ void shellPrintf(const char *fmt, ...) {
     }
 
     va_list args;
-    uint8_t *uart_out_data = NULL;
-    uart_out_data = pvPortMalloc(sizeof(uint8_t) * 256);
+    char *uart_out_data = NULL;
+    uart_out_data = pvPortMalloc(sizeof(char) * 256);
     if(uart_out_data == NULL) {
         shellPrintf("malloc faild\r\n");
         return;
@@ -66,7 +65,7 @@ void shellPrintf(const char *fmt, ...) {
 
     va_start(args, fmt);
     vsnprintf((char *)uart_out_data, 256, fmt, args); 
-    HAL_UART_Transmit(&huart1, uart_out_data, strlen(uart_out_data), HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, (const uint8_t *)uart_out_data, strlen(uart_out_data), HAL_MAX_DELAY);
     vPortFree(uart_out_data);
     va_end(args);    
 }
@@ -106,7 +105,7 @@ static unsigned int runCmd( uint8_t cmdSource, uint32_t instance, unsigned char 
     int argc = 0, i = 0, j = 0;
     char argv[SHELL_PARAM_MAX][64];
     char *argvv[SHELL_PARAM_MAX];
-    commandStruct *pCmdList;
+    const commandStruct *pCmdList;
 
     argv[0][0] = 0;
     for (i = 0; i < SHELL_PARAM_MAX; i++) {
@@ -193,7 +192,7 @@ static void ShellInit(void) {
         0               /* cmdlist */
     };
     uShell.used = 1;
-    uShell.cmdNum = sizeof( commandList ) / sizeof( commandList[0] );
+    uShell.cmdNum = sizeof(commandList) / sizeof(commandList[0]);
     uShell.cmdList = commandList;
     addShellList(&uShell);
 
@@ -226,20 +225,20 @@ static void checkcmd(void) {
  * @return void
  */
 void shell_uart_rx_callback(uint8_t rx_data) {
-    uint8_t tempchar = rx_data;
-    static uint8_t lastchar;
+    uint8_t temp_char = rx_data;
+    static uint8_t last_char;
 
     if (shellBuff.recvPtr>=256) {
         shellBuff.recvPtr = 0;
     }
-    shellBuff.recvPipe[shellBuff.recvPtr++] = tempchar;
+    shellBuff.recvPipe[shellBuff.recvPtr++] = temp_char;
 
-    if (lastchar == '\r' && tempchar == '\n') {
+    if (last_char == '\r' && temp_char == '\n') {
         shellBuff.recvPipe[shellBuff.recvPtr++] = '\0';
         shellBuff.recvPtr = 0;
         kernelSetTaskEvent(TASK_SYS_EVENT_READ);
     }
-    lastchar = tempchar;
+    last_char = temp_char;
 }
 
 void RingbufferInit(void) {

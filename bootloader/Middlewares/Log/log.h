@@ -17,10 +17,10 @@ typedef enum {
 
 typedef enum {
     MODULE_SYS = 0,
-    MODULE_SHELL,      
+    MODULE_SHELL,     
     MODULE_ECALL,            
     MODULE_GPS,           
-    MODULE_COMM,           
+    MODULE_SCOM,           
     MODULE_MAX            
 } module_id_t;
 

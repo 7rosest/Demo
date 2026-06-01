@@ -68,7 +68,7 @@ void shellPrintf(const char *fmt, ...) {
 
     va_start(args, fmt);
     vsnprintf((char *)uart_out_data, 256, fmt, args); 
-    HAL_UART_Transmit(&huart1, uart_out_data, strlen(uart_out_data), HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, (const uint8_t *)uart_out_data, strlen(uart_out_data), HAL_MAX_DELAY);
     vPortFree(uart_out_data);
     va_end(args);    
 }
@@ -108,7 +108,7 @@ static unsigned int runCmd( uint8_t cmdSource, uint32_t instance, unsigned char 
     int argc = 0, i = 0, j = 0;
     char argv[SHELL_PARAM_MAX][64];
     char *argvv[SHELL_PARAM_MAX];
-    commandStruct *pCmdList;
+    const commandStruct *pCmdList;
 
     argv[0][0] = 0;
     for (i = 0; i < SHELL_PARAM_MAX; i++) {

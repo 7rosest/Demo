@@ -157,7 +157,7 @@ void cpu_info(uint8_t cmdSource, uint32_t instance, unsigned int argc, unsigned 
         uint32_t kernel_percent_milli = (kernel_overhead * 100000UL) / xTaskGetTickCount();
         
         char percent_str[16];
-        snprintf(percent_str, sizeof(percent_str), "%u.%03u%%", 
+        snprintf(percent_str, sizeof(percent_str), "%lu.%03lu%%",
              kernel_percent_milli / 1000, 
              kernel_percent_milli % 1000);
         LOG_I(MODULE_SYS, "Kernel Overhead:             %10s\r\n", percent_str);
