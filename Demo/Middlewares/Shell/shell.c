@@ -7,6 +7,9 @@
 #include "usart.h"
 #include "ring_buffer.h"
 #include "shell_list.h"
+#include "cmsis_os.h"
+
+extern osMessageQId logQueueHandle;
 
 static int mask;
 ringbuffer_t dbg_rx_ring;
@@ -62,15 +65,17 @@ void shellPrintf(const char *fmt, ...) {
     char *uart_out_data = NULL;
     uart_out_data = pvPortMalloc(sizeof(char) * 256);
     if(uart_out_data == NULL) {
-        shellPrintf("malloc faild\r\n");
+        HAL_UART_Transmit(&huart1, (uint8_t*)"malloc failed\r\n", 16, HAL_MAX_DELAY);
         return;
     }
+    memset(uart_out_data, 0, sizeof(char) * 256);
 
     va_start(args, fmt);
-    vsnprintf((char *)uart_out_data, 256, fmt, args); 
-    HAL_UART_Transmit(&huart1, (const uint8_t *)uart_out_data, strlen(uart_out_data), HAL_MAX_DELAY);
-    vPortFree(uart_out_data);
+    vsnprintf((char *)uart_out_data, 255, fmt, args); 
+    uart_out_data[255] = '\0';
+    xQueueSend(logQueueHandle, uart_out_data, 0);
     va_end(args);    
+    vPortFree(uart_out_data);
 }
 
 /**
@@ -258,7 +263,7 @@ MODULE_INIT(shell_init, "SHELL");
 
 extern int eeprom_test(void);
 static void Shell_Task(void *pvParameters) {   
-    LOG_I(MODULE_SYS, "Shell Task Started\r\n");
+    LOG_I(MODULE_SYS, "Shell Task Start.\r\n");
     eeprom_test();
 
     while (1) {
@@ -267,4 +272,4 @@ static void Shell_Task(void *pvParameters) {
         vTaskDelay(10UL);
     }
 }
-MODULE_TASK(Shell_Task, "SHELL_Task", 256 * 3, 1);
+MODULE_TASK(Shell_Task, "SHELL_Task", configMINIMAL_STACK_SIZE * 5, 1);

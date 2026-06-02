@@ -18,7 +18,8 @@ typedef enum {
 typedef enum {
     MODULE_SYS = 0,
     MODULE_SHELL,     
-    MODULE_ECALL,            
+    MODULE_OTA, 
+    MODULE_WIFI,           
     MODULE_GPS,           
     MODULE_SCOM,           
     MODULE_MAX            

@@ -55,7 +55,8 @@ osTimerId wdiHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-osMessageQId wifiQueueHandle;
+QueueHandle_t wifiQueueHandle = NULL;
+QueueHandle_t logQueueHandle = NULL;
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
@@ -142,8 +143,11 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
-  osMessageQDef(wifiQueue, 3, 1024);
-  wifiQueueHandle = osMessageCreate(osMessageQ(wifiQueue), NULL);
+
+  wifiQueueHandle = xQueueCreate(3, 1024);
+  logQueueHandle = xQueueCreate(10, 256);
+  // osMessageQDef(logQueue, 10, 256);
+  // logQueueHandle = osMessageCreate(osMessageQ(logQueue), NULL);
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */

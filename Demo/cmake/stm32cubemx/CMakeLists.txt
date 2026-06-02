@@ -27,7 +27,10 @@ set(MX_Include_Dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Flash
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Scom
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Wifi
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../App
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/CJson
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../App/wifi
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../App/upgrade
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../App/log
 )
 
 # STM32CubeMX generated application sources
@@ -56,6 +59,11 @@ set(MX_Application_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Flash/eeprom_sim.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Scom/scom.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Wifi/wifi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/CJson/cJSON.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../App/wifi/json_public.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../App/wifi/wifi_task.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../App/upgrade/upgrade.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../App/log/log_task.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../startup_stm32f407xx.s
 )
 

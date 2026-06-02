@@ -116,13 +116,9 @@ void system_info() {
     /* 使用 GCC 预定义宏获取编译时间 */
     const char *compile_date = __DATE__;   // 格式: "May 18 2026"
     const char *compile_time = __TIME__;   // 格式: "10:30:45"
-    
-    LOG_I(MODULE_SYS, "\r\n");
-    LOG_I(MODULE_SYS, "****************App****************\r\n");
-    LOG_I(MODULE_SYS, "Compile Date: %-s\r\n", compile_date);
-    LOG_I(MODULE_SYS, "Compile Time: %-s\r\n", compile_time);
-    LOG_I(MODULE_SYS, "SW:%s, HW:%s\r\n", ECU_SW_VERSION, ECU_HW_VERSION);
-    LOG_I(MODULE_SYS, "\r\n");
+
+    LOG_I(MODULE_SYS, "\r\n****************App****************\r\nCompile Date: %-s\r\nCompile Time: %-s\r\nSW:%s, HW:%s\r\n\r\n", 
+      compile_date, compile_time, ECU_SW_VERSION, ECU_HW_VERSION);
 }
 
 void cpu_info(uint8_t cmdSource, uint32_t instance, unsigned int argc, unsigned char **argv) { 

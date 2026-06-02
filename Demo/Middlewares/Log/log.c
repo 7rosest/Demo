@@ -5,7 +5,8 @@
 debug_config_t debug_config[MODULE_MAX] = {
     {"sys",      LOG_LEVEL_INFO},    // 系统模块
     {"shell",    LOG_LEVEL_DEBUG},   // SHELL模块
-    {"ecall",    LOG_LEVEL_INFO},    // ECALL模块
+    {"ota",      LOG_LEVEL_INFO},    // OTA模块
+    {"wifi",     LOG_LEVEL_INFO},    // WIFI模块
     {"gps",      LOG_LEVEL_INFO},    // GPS模块
     {"scom",     LOG_LEVEL_INFO},    // SCOM模块
 };

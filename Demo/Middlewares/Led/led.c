@@ -97,6 +97,7 @@ MODULE_INIT(led_init, "LED");
  * @param pvParameters 参数
  */
 static void led_task(void *pvParameters) {
+    LOG_I(MODULE_SYS, "LED Task Start.\r\n");
     #include "../Event/event.h"
     notifier_register_event(&g_event_mgr, &led_node);
 
@@ -108,4 +109,4 @@ static void led_task(void *pvParameters) {
         vTaskDelay(500);
     }
 }
-MODULE_TASK(led_task, "LED_Task", 256, 1);
+MODULE_TASK(led_task, "LED_Task", configMINIMAL_STACK_SIZE, 1);

@@ -322,6 +322,7 @@ MODULE_INIT(scom_init, "SCOM");
  * @param pvParameters 参数
  */
 static void scom_task(void *pvParameters) {
+    LOG_I(MODULE_SYS, "SCOM Task Start.\r\n");
     
     while (1) {
         xSemaphoreTake(scom_parse_semaphore, portMAX_DELAY);
@@ -330,4 +331,4 @@ static void scom_task(void *pvParameters) {
         vTaskDelay(5); 
     }
 }
-MODULE_TASK(scom_task, "SCOM_Task", 256 * 2, 1);
+MODULE_TASK(scom_task, "SCOM_Task", configMINIMAL_STACK_SIZE * 2, 1);
